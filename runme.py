@@ -6,13 +6,18 @@ from scrapy.http import Request
 class photo_motion(scrapy.Spider):
     name = "photoThumbs"
 
-    allowed_domains = [open('conf','r').read().strip()]
+    allowed_domains = []
+    with open('conf','r') as f:
+	allowed_domains.append(f.read().strip())
+
     event_url = allowed_domains[0] + "/groupSessionSelection.php?mode=listSessions&groupID=&eventID="
+
     start_urls = []
     for eventID in range(6,17):
 	start_urls.append( event_url + str(eventID) )
 
     def parse(self, response):
+	exit()
 	print response.css('div a::attr(href)').extract()[1:-1]
 #	    yield Request(
 #		url=response.url.join(href),
